@@ -95,6 +95,16 @@ public class MainActivity extends AppCompatActivity {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                if (txtName.getText().toString().trim().isEmpty() ||
+                        txtDescription.getText().toString().trim().isEmpty() ||
+                        txtTime.getText().toString().trim().isEmpty()) {
+                    txtName.setError("Please input a Name.");
+                    txtDescription.setError("Please input a Description.");
+                    txtTime.setError("Please select a due date.");
+                    return; // dừng lại nếu có trường nào bị bỏ trống
+                }
+
                 ToDoList todo = new ToDoList(); //create oj chua data ngdung input
                 //dua data vao oj
                 todo.setTaskName(txtName.getText().toString());
@@ -117,6 +127,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String id = txtId.getText().toString();
+                if (id.isEmpty()) {
+                    txtId.setError("Please input a ID.");
+                    return;
+                }
                 int result = todoDAO.DeleteToDo(id);
                 if (result == -1) //kt result
                 {

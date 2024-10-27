@@ -29,11 +29,10 @@ public class ToDoDAO {
         //thuc thi insert
         long result = db.insert("todo", null, values);
         // kt result insert
-        if (result == -1){
-            return 0;
-        }else {
-            return 1;
+        if (result <= 0){
+            return -1;
         }
+        return 1;
     }
     //2 hien thi data dang String
     public List<String>getAllToDoToString()
@@ -65,11 +64,10 @@ public class ToDoDAO {
         //thuc thi delete
         int result = db.delete("todo","id=?", new String[]{id});
         // kt result insert
-        if (result == -1){
-            return 0; //delete false
-        }else {
-            return 1; // delete success
+        if (result <= 0){
+            return -1; //false
         }
+        return 1;
     }
     //4 edit
     public int UpdateToDo(ToDoList todo)
@@ -83,11 +81,10 @@ public class ToDoDAO {
         //thuc thi insert
         long result = db.update("todo", values,"id=?", new String[]{todo.getId()});
         // kt result insert
-        if (result == -1){
-            return 0;
-        }else {
-            return 1;
+        if (result <= 0){
+            return -1;
         }
+        return 1;
     }
 }
 
