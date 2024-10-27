@@ -1,22 +1,27 @@
 package com.example.todo_list;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
     EditText txtName, txtDescription, txtTime, txtId;
-    Button btnAdd, btnEdit, btnDelete, btnList;
+    Button btnAdd, btnEdit, btnDelete, btnList, btnTime;
     ListView listView;
     ArrayAdapter<String> arrayAdapter;
     ToDoDAO todoDAO;
@@ -35,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         btnEdit = findViewById(R.id.todoBtnEdit);
         btnDelete = findViewById(R.id.todoBtnDelete);
         btnList = findViewById(R.id.todoBtnList);
+        btnTime = findViewById(R.id.todoBtnTime);
         listView = findViewById(R.id.todoListView);
         //khoi tao cac bien
         context = this;
@@ -57,6 +63,34 @@ public class MainActivity extends AppCompatActivity {
                 listView.setAdapter(arrayAdapter);
             }
         });
+
+        // Thiết lập DatePickerDialog để chọn ngày
+        btnTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar calendar = Calendar.getInstance();
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(
+                        MainActivity.this,R.style.DialogTheme, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        // Định dạng ngày thành "yyyy-MM-dd"
+                        Calendar selectedDate = Calendar.getInstance();
+                        selectedDate.set(Calendar.YEAR, year);
+                        selectedDate.set(Calendar.MONTH, month);
+                        selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+                        txtTime.setText(dateFormat.format(selectedDate.getTime()));
+                    }
+                }, year, month, day);
+                datePickerDialog.show();
+            }
+        });
+
         //----btn add
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
