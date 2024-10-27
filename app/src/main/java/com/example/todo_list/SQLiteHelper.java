@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
-public class SQLiteHelper extends SQLiteOpenHelper {
+public class  SQLiteHelper extends SQLiteOpenHelper {
     // create table todo
     public static final String SQL_TODO = "CREATE TABLE todo ( " +
             "id integer PRIMARY KEY," +
